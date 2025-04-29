@@ -1,0 +1,135 @@
+<style>
+    * {
+        font-weight: bolder;
+        font-family: 'Courier New', Courier, monospace;
+    }
+
+    button {
+        width: 50px;
+        height: 50px;
+        font-size: large;
+    }
+</style>
+<h3>Choose the number of digits you want to memorize</h3>
+<button onclick="Set_Digit(5)">5</button>
+<button onclick="Set_Digit(6)">6</button>
+<button onclick="Set_Digit(7)">7</button>
+<button onclick="Set_Digit(8)">8</button>
+<button onclick="Set_Digit(9)">9</button>
+<button onclick="Set_Digit(10)">10</button>
+<button onclick="Set_Digit(11)">11</button>
+<button onclick="Set_Digit(12)">12</button>
+<hr>
+<h3>Look at the number as long as you want. Then enter it via the digit buttons below</h3>
+<h1 id="number"></h1>
+<br>
+<table>
+    <tr>
+        <td>
+            <button onclick="Add(1)">1</button>
+        </td>
+        <td>
+            <button onclick="Add(2)">2</button>
+        </td>
+        <td>
+            <button onclick="Add(3)">3</button>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <button onclick="Add(4)">4</button>
+        </td>
+        <td>
+            <button onclick="Add(5)">5</button>
+        </td>
+        <td>
+            <button onclick="Add(6)">6</button>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <button onclick="Add(7)">7</button>
+        </td>
+        <td>
+            <button onclick="Add(8)">8</button>
+        </td>
+        <td>
+            <button onclick="Add(9)">9</button>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <button style="color: red;" onclick="Erase()">X</button>
+        </td>
+        <td>
+            <button onclick="Add(0)">0</button>
+        </td>
+        <td>
+            <button style="color: green;" onclick="Check_Answer()">OK</button>
+        </td>
+    </tr>
+</table>
+<button style="color: blue; width: 160px;" onclick="New_Game()">New Test</button>
+<script>
+    window.onload = function () {
+        number = "";
+        Random_Answer();
+        document.getElementById("number").innerText = answer;
+    };
+    var Digits = 5;
+    var number = "";
+    var answer = "";
+    function Random_Answer() {
+        answer = "";
+        min = 0;
+        max = 9;
+        for (i = 1; i <= Digits; i++) {
+            var d = Math.floor(Math.random() * (max - min + 1)) + min;
+            answer += d;
+        }
+    }
+    function Show() {
+        var show = "";
+        for (var i = 0; i < Digits; i++) {
+            if (i >= number.length) {
+                show += " _ ";
+                continue;
+            }
+            show += " " + number[i] + " ";
+        }
+        document.getElementById("number").innerText = show;
+    }
+    function Add(digit) {
+        if (number.length >= Digits)
+            return;
+        number += digit;
+        Show();
+    }
+    function Erase() {
+        if (number == "")
+            return;
+        var temp = "";
+        for (i = 0; i < number.length - 1; i++)
+            temp += number[i];
+        number = temp;
+        Show();
+    }
+    function Check_Answer() {
+        if (number == answer) {
+            document.getElementById("number").innerHTML = "<span style='color:green'>Correct</span>";
+            number = "";
+            return;
+        }
+        document.getElementById("number").innerHTML = "<span style='color:red'>Incorrect</span>";
+        number = "";
+    }
+    function New_Game() {
+        var number = "";
+        Random_Answer();
+        document.getElementById("number").innerText = answer;
+    }
+    function Set_Digit(dd) {
+        Digits = dd;
+        New_Game();
+    }
+</script>
